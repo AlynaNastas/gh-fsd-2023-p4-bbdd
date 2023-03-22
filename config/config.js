@@ -1,11 +1,13 @@
-{
+require('dotenv').config();
+
+module.exports = {
   "development": {
-    "username": "root",
-    "password": "Gb8x3CcTdzGNACne8DV9",
-    "database": "railway",
-    "host": "containers-us-west-59.railway.app",
-    "port": 6354,
-    "dialect": "mysql"
+    "username": process.env.MYSQL_USER,
+    "password": process.env.MYSQL_PASSWORD,
+    "database": process.env.MYSQL_DATABASE,
+    "host": process.env.MYSQL_HOST,
+    "dialect": "mysql",
+    "port": process.env.MYSQL_PORT
   },
   "test": {
     "username": "root",
@@ -22,3 +24,9 @@
     "dialect": "mysql"
   }
 }
+
+
+
+
+
+
