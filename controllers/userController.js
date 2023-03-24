@@ -266,14 +266,14 @@ userController.getAllUsers = async (req, res) => {
 
 // VER TODOS LOS DOCTORES
 
-userController.getDoctors = async (req, res) => {
+userController.getUser = async (req, res) => {
     try {
         const doctors = await User.findAll({
             include: [
               {
                 model: Role,
                 where: {
-                  privilege: "Doctor",
+                  privilege: "User",
                 },
               },
             ],
