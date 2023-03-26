@@ -155,17 +155,13 @@ userController.updateUser = async (req, res) => {
     }
 }
 
-// VER CITAS (Los usuarios ven sus propias citas y los doctores verán las que tienen asignadas)
+// VER CITAS (Los doctores verán las que tienen asignadas)
 
-userController.getAppointment = async (req, res) => {
+userController.getDocApp = async (req, res) => {
     try {
-      let userAppointment;
-  
-      if (req.roles.includes('Doctor')) {
-        userAppointment = await Appointment.findAll({
-          where: {
-            doctor_id: req.userId,
-          },
+
+       const  doctorAppointment = await Appointment.findAll({
+        
           include: [
             {
                 model: Intervention,
@@ -186,9 +182,19 @@ userController.getAppointment = async (req, res) => {
           attributes: {
             exclude: ['patient_id', 'intervention_id'],
           },
-        });
-      } else {
-        userAppointment = await Appointment.findAll({
+        })
+        return res.json(doctorAppointment);
+      } catch (error) {
+        return res.status(500).send(error.message);
+      }
+    };
+
+
+       // VER CITAS (Los usuarios ven sus propias citas 
+        
+        userController.getAppointment = async (req, res) => {
+          try {
+        const userAppointment = await Appointment.findAll({
           where: {
             patient_id: req.userId,
           },
@@ -214,13 +220,15 @@ userController.getAppointment = async (req, res) => {
             exclude: ['patient_id', 'intervention_id'],
           },
         });
-      }
+      
   
       return res.json(userAppointment);
     } catch (error) {
       return res.status(500).send(error.message);
     }
   };
+
+
 
 // ACTUALIZACIÓN FORMA DE PAGO (Para los clientes)
 
@@ -344,5 +352,6 @@ userController.createDoctor = async(req,res)=>{
         return res.status(500).send(error.message)
     }
 }
+
 
 module.exports = userController;

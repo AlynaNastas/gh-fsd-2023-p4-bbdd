@@ -22,7 +22,11 @@ router.get('/users/role/:id', verifyToken, isAdmin, userController.getUserRole)
 
 router.post('/doctors',verifyToken, isDoctor, userController.createDoctor)
 router.get('/admin/doctors', verifyToken, isDoctor, userController.getUser)
+router.get('/doc/app', verifyToken, isDoctor, userController.getDocApp)
 
 
 
-module.exports = router;
+
+
+
+module.exports = router; 
